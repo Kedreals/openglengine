@@ -1,6 +1,9 @@
 #ignore generated Documentation
 Doxygen/
 
+#ignore generated backupfiles
+*~
+
 *.i
 *.ii
 *.gpu
