@@ -1,3 +1,6 @@
+#ignore generated Documentation
+Doxygen/
+
 *.i
 *.ii
 *.gpu
