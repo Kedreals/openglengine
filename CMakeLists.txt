@@ -22,7 +22,7 @@ include_directories(${INCLUDE_DIRS})
 
 set(SRC
   ${SRC_DIR}/main.cpp
-  ${SRC_DIR}/shader.cpp
+  ${SRC_DIR}/
   )
 
 set(ALL_LIBS
