@@ -1,7 +1,8 @@
 #ifndef _CAMERA_HPP_
 #define _CAMERA_HPP_
 
-#include "default_headers.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 /** \brief is a simple class reprensenting a camera for rendering
  */
@@ -10,14 +11,14 @@ class Camera
 public:
   /** \brief construct a camera with the given properties
       
-      \aposition is the position of the camera
-      \alookAt the point the camera looks at
-      \aup the vector that detrmines wich direction up is
-      \afov the FoV of the camera
-      \aaspect the aspect ratio of the camera
-      \anear the near clipping plane
-      \afar the far clipping plane
-   */
+      \a position is the position of the camera
+      \a lookAt the point the camera looks at
+      \a up the vector that detrmines wich direction up is
+      \a fov the FoV of the camera
+      \a aspect the aspect ratio of the camera
+      \a near the near clipping plane
+      \a far the far clipping plane
+  */
   Camera(
 	 const glm::vec3& position = glm::vec3(4,3,3),
 	 const glm::vec3& lookAt = glm::vec3(0,0,0),
@@ -123,7 +124,7 @@ public:
   void MoveCamera(const glm::vec3& direction);
   /** \brief rotates the camera according to the eulerAngles
       
-      \aeulerAngles is a vec3 with the rotation around the x-axis as x-coordinate
+      \a eulerAngles is a vec3 with the rotation around the x-axis as x-coordinate
       the rotation around the y-axis as y-coordinate and around z-axis as z-coordinate
       \sa RotateCamera(const glm::quat&)
       
@@ -137,9 +138,9 @@ public:
   void RotateCamera(const glm::quat& rotation);
   /** \brief the camera focuses on the given point
 
-      \apoint the vec3 that represents the point the camera will look at
+      \a point the vec3 that represents the point the camera will look at
    */
-  void FocusOn(const glm::vec3& point, const glm::vec3& up = vec3(0,1,0));
+  void FocusOn(const glm::vec3& point, const glm::vec3& up = glm::vec3(0,1,0));
 
 private:
   Camera(const Camera&) = delete;
@@ -156,6 +157,6 @@ private:
 
   glm::mat4 m_view;
   glm::mat4 m_projection;
-}
+};
 
 #endif

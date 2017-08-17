@@ -1,4 +1,5 @@
 #include "camera.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera(const glm::vec3& position, const glm::vec3& lookAt, const glm::vec3& up, float fov, float aspect, float near, float far) : m_position(position), m_direction(lookAt-position), m_up(up), m_fov(fov), m_aspect(aspect), m_near(near), m_far(far), m_view(glm::lookAt(position, lookAt, up)), m_projection(glm::perspective(fov, aspect, near, far))
 {
