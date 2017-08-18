@@ -1,5 +1,5 @@
 #include "baseGame.hpp"
-#include "camera.hpp"
+
 
 /** \mainpage Our OpenGL Engine
 

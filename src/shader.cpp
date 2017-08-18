@@ -10,10 +10,14 @@ using namespace std;
 
 GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path){
 
+  std::clog << "beginning creation of shaders\n";
+  
   // Create the shaders
   GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
   GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
+  clog << "finished creation of shader\nstarting to load vertex shader code\n";
+  
   //Read the Vertex Shader code from the file
   string VertexShaderCode;
   ifstream VertexShaderStream(vertex_file_path, ios::in);
@@ -27,6 +31,8 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
     getchar();
     return 0;
   }
+
+  clog << "Finished reading vertexshader\n";
 
   // Read the Fragment Shader code from the file
   string FragmentShaderCode;
@@ -42,6 +48,8 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
     return 0;
   }
 
+  clog << "Finished reading FragmentShader\n";
+
   GLint Result = GL_FALSE;
   int InfoLogLength;
 
@@ -50,6 +58,8 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
   char const * VertexSourcePointer = VertexShaderCode.c_str();
   glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
   glCompileShader(VertexShaderID);
+
+  clog<<"Finished compiling vertexShader\n";
 
   //Check Vertex Shader
   glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
@@ -65,6 +75,8 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
   char const * FragmentSourcePointer = FragmentShaderCode.c_str();
   glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
   glCompileShader(FragmentShaderID);
+
+  clog << "finished compiling fragment Shader\n";
 
   //Check Fragment Shader
   glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
@@ -91,11 +103,17 @@ GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path)
     cerr << &ProgramErrorMessage[0] << "\n";
   }
 
+  clog << "finished linking program\n";
+
   glDetachShader(ProgramID, VertexShaderID);
   glDetachShader(ProgramID, FragmentShaderID);
 
+  clog << "finished detaching Shaders\n";
+
   glDeleteShader(VertexShaderID);
   glDeleteShader(FragmentShaderID);
+
+  clog << "finished deletion of shaders\n";
 
   return ProgramID;
 }

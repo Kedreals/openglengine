@@ -4,6 +4,8 @@
 #include <string>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "model.hpp"
+#include "debug.hpp"
 
 class Camera;
 
@@ -70,6 +72,9 @@ protected:
 private:
   GLFWwindow* m_window;
   bool m_continue;
+  Model* m_Model;
+  GLuint m_shader;
+  GLuint m_mvp_handle;
 };
 
 #endif

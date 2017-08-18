@@ -25,6 +25,8 @@ set(SRC
   ${SRC_DIR}/camera.cpp
   ${SRC_DIR}/game.cpp
   ${SRC_DIR}/shader.cpp
+  ${SRC_DIR}/model.cpp
+  ${SRC_DIR}/debug.cpp
   )
 
 set(ALL_LIBS

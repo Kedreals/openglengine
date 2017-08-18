@@ -1,8 +1,9 @@
 #include "baseGame.hpp"
 #include "camera.hpp"
+#include "shader.hpp"
 #include <iostream>
 
-BaseGame::BaseGame(int width, int height) : camera(nullptr), m_window(nullptr), m_continue(true)
+BaseGame::BaseGame(int width, int height) : camera(nullptr), m_window(nullptr), m_continue(true), m_Model(nullptr)
 {
   InitGLFW(width, height);
   
@@ -16,6 +17,8 @@ BaseGame::~BaseGame()
   m_window = nullptr;
   if(camera)
     delete camera;
+  if(m_Model)
+    delete m_Model;
 }
 
 void BaseGame::Exit(const std::string& error)
@@ -26,6 +29,8 @@ void BaseGame::Exit(const std::string& error)
 
 void BaseGame::Initialize()
 {
+  m_shader = LoadShaders("../shaders/SimpleVertexShader.vs", "../shaders/SimpleFragmentShader.fs");
+  
   camera = new Camera();
   if(!camera)
     Exit("cannot initialize Camera");
@@ -33,14 +38,32 @@ void BaseGame::Initialize()
 
 void BaseGame::LoadContent()
 {
+  m_Model = new Model();
 }
 
 void BaseGame::Update()
 {
+  glm::mat3 rot(1.0f);
+
+  float a = 3.14f*(1.0f/180.0f);
+
+  rot[0][0] = std::cos(a);
+  rot[0][2] = -std::sin(a);
+  rot[2][0] = std::sin(a);
+  rot[2][2] = std::cos(a);
+  
+  glm::vec3 cd = rot*camera->GetPosition() - camera->GetPosition();
+
+  
+  
+  camera->MoveCamera(cd);
 }
 
 void BaseGame::Draw()
 {
+
+  m_Model->Draw(*camera, m_shader);
+  
 }
 
 void BaseGame::InitGLFW(int width, int height, const std::string& title)
@@ -70,6 +93,9 @@ void BaseGame::InitGLFW(int width, int height, const std::string& title)
   glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE);
 
   glClearColor(0,0,0,0);
+
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
 }
 
 void BaseGame::Start()
