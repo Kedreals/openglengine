@@ -41,7 +41,11 @@ public:
 
   glm::mat4 GetWorldMatrix() const;
 
-  void Draw(const Camera&, GLuint programID = 0) const;
+  void Draw(const Camera&, GLuint programID = 0, GLuint mvp_handle = 0) const;
+
+  GLfloat* GetPositions(int* count) const;
+  GLfloat* GetColors(int* count) const;
+  unsigned int* GetIndices(int* count) const;
 
 private:
   glm::vec3 m_position;
@@ -51,10 +55,6 @@ private:
   std::vector<glm::vec3> m_vertexPositions;
   std::vector<glm::vec3> m_vertexColors;
   std::vector<unsigned int> m_indices;
-  GLuint m_vertexBuffer = 0;
-  GLuint m_colorBuffer = 0;
-  GLuint m_indexBuffer = 0;
-  GLuint m_vertexArrayID = 0;
 };
 
 #endif

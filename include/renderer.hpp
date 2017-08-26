@@ -1,8 +1,9 @@
 #ifndef _RENDERER_HPP_
 #define _RENDERER_HPP_
 
-class Game;
-class Model;
+#include <glm/glm.hpp>
+
+//class Model;
 
 /** \todo implement
  */
@@ -13,14 +14,15 @@ public:
   ~Renderer();
 
   void Initialize();
-  void Draw(const Model& model);
-
-protected:
-  void DrawToScreen() const;
-  friend class Game;
-
+  //void AddContent(const Model& model);
+  void Draw() const;
+  
 private:
-std::vector<glm::vec3>
+  std::vector<const Model&> m_models;
+  GLuint m_vertexBuffer;
+  GLuint m_colorBuffer;
+  GLuint m_indexBuffer;
+  GLuint m_vertexArrayID;
 };
 
 #endif //_RENDERER_HPP_

@@ -87,13 +87,29 @@ Model::Model(const std::string& file) : m_position(0,0,0), m_orientation(1, 0,0,
       return;
     }
 
+  GLfloat g_vertex_buffer_data[m_vertexPositions.size()*3];
+  for(size_t i = 0; i < m_vertexPositions.size(); ++i)
+    {
+      g_vertex_buffer_data[i*3+0] = m_vertexPositions[i][0];
+      g_vertex_buffer_data[i*3+1] = m_vertexPositions[i][1];
+      g_vertex_buffer_data[i*3+2] = m_vertexPositions[i][2];
+    }
+
+  GLfloat g_color_buffer_data[m_vertexColors.size()*3];
+  for(size_t i = 0; i<m_vertexColors.size(); ++i)
+    {
+      g_color_buffer_data[i*3+0] = m_vertexColors[i][0];
+      g_color_buffer_data[i*3+1] = m_vertexColors[i][1];
+      g_color_buffer_data[i*3+2] = m_vertexColors[i][2];
+    }
+  
   glGenBuffers(1,&m_vertexBuffer);
       glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-      glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*m_vertexPositions.size(), m_vertexPositions.data(), GL_DYNAMIC_DRAW);
+      glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_DYNAMIC_DRAW);
 
       glGenBuffers(1,&m_colorBuffer);
       glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
-      glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*m_vertexColors.size(), m_vertexColors.data(), GL_DYNAMIC_DRAW);
+      glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_DYNAMIC_DRAW);
 
       glGenBuffers(1, &m_indexBuffer);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
@@ -187,10 +203,8 @@ glm::mat4 Model::GetWorldMatrix() const
   return res;
 }
 
-void Model::Draw(const Camera& cam, GLuint progID) const
+void Model::Draw(const Camera& cam, GLuint progID, GLuint mvp_handle) const
 {
-  
-  GLuint mvp_handle = glGetUniformLocation(progID, "MVP");
   glUseProgram(progID);
   
   glm::mat4 mvp = cam.GetProjection()*cam.GetView()*GetWorldMatrix();
@@ -212,4 +226,41 @@ void Model::Draw(const Camera& cam, GLuint progID) const
 
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
+}
+
+GLfloat* Model::GetPositions(int* count) const
+{
+  *count = m_vertexPositions.size()*3;
+  GLfloat* res = (GLfloat*)malloc(sizeof(GLfloat)*(*count));
+  for(size_t i = 0; i < m_vertexPositions.size(); ++i)
+    {
+      res[i*3+0] = m_vertexPositions[i][0];
+      res[i*3+1] = m_vertexPositions[i][1];
+      res[i*3+2] = m_vertexPositions[i][2];
+    }
+  return res;
+}
+
+GLfloat* Model::GetColors(int* count) const
+{
+  *count = m_vertexColors.size()*3;
+  GLfloat* res = (GLfloat*)malloc(sizeof(GLfloat)*(*count));
+  for(size_t i = 0; i < m_vertexColors.size(); ++i)
+    {
+      res[i*3+0] = m_vertexColors[i][0];
+      res[i*3+1] = m_vertexColors[i][1];
+      res[i*3+2] = m_vertexColors[i][2];
+    }
+  return res;
+}
+
+unsigned int* Model::GetIndices(int* count) const
+{
+  *count = m_indices.size();
+  unsigned int* res = (unsigned int*)malloc(sizeof(unsigned int)*(*count));
+  for(size_t i = 0; i < m_indices.size(); ++i)
+    {
+      res[i] = m_indices[i];
+    }
+  return res;
 }
