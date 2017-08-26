@@ -27,6 +27,7 @@ set(SRC
   ${SRC_DIR}/shader.cpp
   ${SRC_DIR}/model.cpp
   ${SRC_DIR}/debug.cpp
+  ${SRC_DIR}/renderer.cpp
   )
 
 set(ALL_LIBS

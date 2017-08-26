@@ -24,7 +24,7 @@ public:
 	 const glm::vec3& lookAt = glm::vec3(0,0,0),
 	 const glm::vec3& up = glm::vec3(0,1,0),
 	 float fov = glm::radians(45.0f),
-	 float aspect = 16.0f/9.0f,
+	 float aspect = 1024.0f/768.0f,
 	 float near = 0.1f,
 	 float far = 100.0f
 	 );
@@ -136,6 +136,10 @@ public:
       \sa RotateCamera(const glm::vec3&)
    */
   void RotateCamera(const glm::quat& rotation);
+
+  /** \brief rotates the position of the camera around the lookAt point.
+   */
+  void RotateAroundLookAt(const glm::vec3& lookAt, const glm::vec3& rot);
   /** \brief the camera focuses on the given point
 
       \a point the vec3 that represents the point the camera will look at

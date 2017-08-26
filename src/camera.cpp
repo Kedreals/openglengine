@@ -113,6 +113,15 @@ void Camera::RotateCamera(const glm::quat& rot)
   SetUp(rot*m_up);
 }
 
+void Camera::RotateAroundLookAt(const glm::vec3& lookAt, const glm::vec3& rotation)
+{
+  glm::vec3 p = m_position-lookAt;
+  
+  glm::quat rot((3.14f/180.0f)*rotation);
+  SetPosition(rot*p);
+  FocusOn(lookAt);
+}
+
 void Camera::FocusOn(const glm::vec3& point, const glm::vec3& up)
 {
   SetDirection(point-m_position);
