@@ -2,7 +2,6 @@
 #include "renderer.hpp"
 #include "camera.hpp"
 #include <iostream>
-#include <string>
 
 BaseGame::BaseGame()
 {
@@ -15,6 +14,7 @@ BaseGame::~BaseGame()
 }
 
 double lastTime = 0.0;
+int lastFrames = 0;
 int nbFrames = 0;
 
 void CountFPS()
@@ -25,6 +25,7 @@ void CountFPS()
     {
       std::clog << std::string(100, '\b') << nbFrames;
       lastTime = currentTime;
+      lastFrames = nbFrames;
       nbFrames = 0;
     }
 }
@@ -35,12 +36,23 @@ void BaseGame::Start()
   lastTime = glfwGetTime();
   while(m_Renderer->IsRunning())
     {
-      CountFPS();
-      m_Camera->RotateAroundLookAt(vec3(), vec3(0,1.0f,0));
-      
-      glm::mat4 mvp = m_Camera->GetProjection()*m_Camera->GetView();
-      m_Renderer->Update();
-      m_Renderer->Frame(mvp);
+      Update();
+      Draw();
     }
   std::clog << "\n";
+}
+
+void BaseGame::Update()
+{
+  CountFPS();
+  m_Camera->RotateAroundLookAt(vec3(), vec3(0, 1.0f, 0));
+
+  m_Renderer->Update(lastFrames);
+}
+
+void BaseGame::Draw()
+{
+  mat4 mvp = m_Camera->GetProjection()*m_Camera->GetView();
+
+  m_Renderer->Frame(mvp);
 }

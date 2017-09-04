@@ -1,10 +1,8 @@
 #ifndef _RENDERER_HPP_
 #define _RENDERER_HPP_
 
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include <string>
+#include <memory>
 
 #include "model.hpp"
 
@@ -12,35 +10,55 @@ using namespace glm;
 
 class Model;
 
-/** \todo implement
- */
+/** \todo Add more Setter and Getter functions
+    \brief simple class for Rendering Content to the window
+    
+*/
 class Renderer
 {
 public:
-  Renderer(unsigned int width = 1024, unsigned int height = 768);
+  /** \brief Initializes a window and the glfw stuff
+   */
+  Renderer(unsigned int width = 1024, unsigned int height = 768, const char* title = "Engine");
+  /** \brief terminates the glfw library
+   */
   ~Renderer();
 
+  /** \brief returns bool if the window is still open
+   */
   bool IsRunning() const;
-  void Update();
-  void Frame(mat4 mvp);
-  
+  /** \brief updates the content
+
+      may be obsoleat soon.
+   */
+  void Update(int fps);
+  /** \brief renders the content.
+
+      \a mvp is the projection*view*Model Matrix defining how to render the content.
+      \sa Model::Draw()
+   */
+  void Frame(const mat4& mvp);
+
+  /** \brief Sets the title of the window
+  */
+  void SetTitle(const std::string& title);
+
+  /** \brief Add the \a model to the Content that is drawn each frame
+  */
+  void AddContent(std::shared_ptr<Model> model);
   
 private:
   Renderer(Renderer&) = delete;
   Renderer(const Renderer&) = delete;
   
 private:
+  std::string m_baseTitle;
   GLFWwindow* m_window;
   bool m_initialized = false;
-  /*GLuint m_vertexArrayID;
-  GLuint m_vertexBuffer;
-  GLuint m_colorBuffer;
-  GLuint m_indexBuffer;
-  */
+  
   GLuint m_shader;
   GLuint m_mvp_handle;
-  Model m_model1;
-  Model m_model2;
+  std::vector<std::shared_ptr<Model>> m_Content;
 };
 
 #endif //_RENDERER_HPP_

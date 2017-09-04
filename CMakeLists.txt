@@ -23,11 +23,12 @@ include_directories(${INCLUDE_DIRS})
 set(SRC
   ${SRC_DIR}/main.cpp
   ${SRC_DIR}/camera.cpp
-  ${SRC_DIR}/game.cpp
+  ${SRC_DIR}/baseGame.cpp
   ${SRC_DIR}/shader.cpp
   ${SRC_DIR}/model.cpp
   ${SRC_DIR}/debug.cpp
   ${SRC_DIR}/renderer.cpp
+  ${SRC_DIR}/vertex.cpp
   )
 
 set(ALL_LIBS
