@@ -2,6 +2,7 @@
 #define _VERTEX_HPP_
 
 #include <glm/glm.hpp>
+#include <iostream>
 
 /** \todo wrapper class for a vertex container that holds the meta information which is now saved inside the vertices
     \brief simple class that contains all informations of one vertex
@@ -67,6 +68,8 @@ public:
       resArray[3] corralates to normal
    */
   void GetSetAttribArray(bool* resArray) const;
+
+  float operator[](int index) const;
 private:
   Flags m_setAttrib;
   float m_x, m_y, m_z, m_r, m_g, m_b, m_u, m_v, m_nx, m_ny, m_nz;
@@ -78,5 +81,7 @@ private:
     Position, Color, UV, Normal
  */
 const void* GetPointerTo(Vertex::Flags f);
+
+std::ostream& operator <<(std::ostream&, const Vertex&);
 
 #endif //_VERTEX_HPP_

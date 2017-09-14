@@ -91,4 +91,39 @@ const void* GetPointerTo(Vertex::Flags f)
       return nullptr;
     }
 }
+
+float Vertex::operator[](int index) const
+{
+  switch(index){
+  case 0: return m_x;
+  case 1: return m_y;
+  case 2: return m_z;
+  case 3: return m_r;
+  case 4: return m_g;
+  case 5: return m_b;
+  case 6: return m_u;
+  case 7: return m_v;
+  case 8: return m_nx;
+  case 9: return m_ny;
+  case 10: return m_nz;
+  default: return 0;
+  }
+}
 	
+std::ostream& operator <<(std::ostream& lhs, const Vertex& rhs)
+{
+  lhs << "Position (" << rhs[0] << ", " << rhs[1] << ", " << rhs[2] << ")";
+  if(rhs.IsSet(Vertex::Flags::Color))
+    {
+      lhs << ";  Color (" << rhs[3] << ", " << rhs[4] << ", " << rhs[5] << ")";
+    }
+  if(rhs.IsSet(Vertex::Flags::UV))
+    {
+      lhs << ";  UV (" << rhs[6] << ", " << rhs[7] << ")";
+    }
+  if(rhs.IsSet(Vertex::Flags::Normal))
+    {
+      lhs << ";  Normal (" << rhs[8] << ", " << rhs[9] << ", " << rhs[10] << ")";
+    }
+  return lhs << "\n";
+}

@@ -8,6 +8,12 @@
 
 #include <vector>
 
+//Forward declaration of the ModelLoader and its namespace
+namespace Loading
+{
+  class ModelLoader;
+}
+
 /** \brief simple class containing all needed informations about a model
 
     contains the transformation matrix for getting from Model space
@@ -16,6 +22,8 @@
 class Model
 {
 public:
+  friend class Loading::ModelLoader;
+  
   /** \todo implement model loader
       \brief simple ctor. In the future it should be able to load from files.
   */
@@ -60,6 +68,8 @@ public:
 private:
   Model(Model&) = delete;
   Model(const Model&) = delete;
+
+
   
 private:
   float m_Scale = 1.0f;

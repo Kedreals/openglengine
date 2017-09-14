@@ -37,20 +37,20 @@ Renderer::Renderer(unsigned int width, unsigned int height, const char* title)
   
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   
-  std::shared_ptr<Model> model1 = std::make_shared<Model>();
+  std::shared_ptr<Model> model1 = std::make_shared<Model>("../data/gargoyle500.off");
   model1->Initialize();
 
-  model1->Scale(0.5f);
-  model1->Translate(glm::vec3(-0.5f, -0.5f, -0.5f));
+  //  model1->Scale(0.5f);
+  // model1->Translate(glm::vec3(-0.5f, -0.5f, -0.5f));
   
-  std::shared_ptr<Model> model2 = std::make_shared<Model>();
-  model2->Initialize();
+  //std::shared_ptr<Model> model2 = std::make_shared<Model>();
+  //model2->Initialize();
   
-  model2->Scale(0.5f);
-  model2->Translate(glm::vec3(0.5f, 0.5f, 0.5f));
+  //model2->Scale(0.5f);
+  // model2->Translate(glm::vec3(0.5f, 0.5f, 0.5f));
   
   AddContent(model1);
-  AddContent(model2);
+  //  AddContent(model2);
   
   m_shader = LoadShaders("../shaders/SimpleVertexShader.vs", "../shaders/SimpleFragmentShader.fs");
   

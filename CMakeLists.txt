@@ -29,6 +29,7 @@ set(SRC
   ${SRC_DIR}/debug.cpp
   ${SRC_DIR}/renderer.cpp
   ${SRC_DIR}/vertex.cpp
+  ${SRC_DIR}/modelLoader.cpp
   )
 
 set(ALL_LIBS

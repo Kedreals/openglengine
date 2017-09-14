@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
+#include "modelLoader.hpp"
 
 
 Model::Model(const char* f):m_orientation(glm::vec3(0,0,0)), m_World(1.0f), m_initialized(false), m_vertecies()
@@ -49,7 +50,7 @@ Model::Model(const char* f):m_orientation(glm::vec3(0,0,0)), m_World(1.0f), m_in
     }
   else
     {
-      
+      Loading::Load(this, file);
     }
 }
 
@@ -130,7 +131,7 @@ void Model::Draw(const glm::mat4& vp, GLuint shader, GLuint mvp_handle)
   
   glDrawElements(
 		 GL_TRIANGLES,
-		 36,
+		 m_indices.size(),
 		 GL_UNSIGNED_INT,
 		 (void*)0);
 
