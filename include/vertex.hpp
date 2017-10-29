@@ -4,8 +4,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
-/** \todo wrapper class for a vertex container that holds the meta information which is now saved inside the vertices
-    \brief simple class that contains all informations of one vertex
+/** \brief simple class that contains all informations of one vertex
     
     contains information about the position, color, uv and normal of an vertex
     as well as the meta information which of these are actualy set.
@@ -55,33 +54,13 @@ public:
    */
   ~Vertex();
 
-  /** \brief returns if the given flags are set
-   */
-  bool IsSet(Flags f) const;
-
-  /** \brief sets \a resArray so that the values corralate with the set properties
-
-      resArray should allways have space for atleast 4 bool values.
-      resArray[0] corralates to position
-      resArray[1] corralates to color
-      resArray[2] corralates to uv
-      resArray[3] corralates to normal
-   */
-  void GetSetAttribArray(bool* resArray) const;
-
+  
+    
   float operator[](int index) const;
 private:
-  Flags m_setAttrib;
   float m_x, m_y, m_z, m_r, m_g, m_b, m_u, m_v, m_nx, m_ny, m_nz;
 };
 
-/** \brief gets the offset for the given flag
-
-    do not use mixed flags. Only use one of the following flags
-    Position, Color, UV, Normal
- */
-const void* GetPointerTo(Vertex::Flags f);
-
-std::ostream& operator <<(std::ostream&, const Vertex&);
+//std::ostream& operator <<(std::ostream&, const Vertex&);
 
 #endif //_VERTEX_HPP_

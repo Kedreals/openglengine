@@ -3,10 +3,9 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "vertex.hpp"
 #include <glm/gtc/quaternion.hpp>
 
-#include <vector>
+#include "vertexBuffer.hpp"
 
 //Forward declaration of the ModelLoader and its namespace
 namespace Loading
@@ -24,7 +23,7 @@ class Model
 public:
   friend class Loading::ModelLoader;
   
-  /** \todo implement model loader
+  /**
       \brief simple ctor. In the future it should be able to load from files.
   */
   Model(const char* file = "");
@@ -51,10 +50,14 @@ public:
   */
   void Scale(float scaling);
 
-  /** \todo implement
+  /** \brief rotates the model by the given angles
+
+      takes the angles in radiants
+      calculates the equivalent quaternion and uses it to perform the rotation
+      /sa Rotate(const glm::quat&) 
    */
   void Rotate(const glm::vec3& eulerAngles);
-  /** \todo implement
+  /** \brief rotates the model accoriding to the given quaternion
    */
   void Rotate(const glm::quat& rotation);
 
@@ -76,7 +79,7 @@ private:
   glm::quat m_orientation;
   glm::mat4 m_World;
   bool m_initialized;
-  std::vector<Vertex> m_vertecies;
+  VertexBuffer m_vertecies;
   std::vector<unsigned int> m_indices;
 
   GLuint m_vertexArrayID;

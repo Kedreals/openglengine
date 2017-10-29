@@ -27,7 +27,6 @@ Vertex::Vertex(vec3& pos, vec2& uv, vec3& normal, Flags f) : Vertex::Vertex(pos,
 
 Vertex::Vertex(vec3& pos, vec3& color, vec2& uv, vec3& normal, Flags f)
 {
-  m_setAttrib = f;
   m_x = pos[0];
   m_y = pos[1];
   m_z = pos[2];
@@ -51,45 +50,12 @@ Vertex::Vertex(vec3& pos, vec3& color, vec2& uv, vec3& normal, Flags f)
     }
 }
 
-Vertex::Vertex(const Vertex& v) : m_setAttrib(v.m_setAttrib), m_x(v.m_x), m_y(v.m_y), m_z(v.m_z), m_r(v.m_r), m_g(v.m_g), m_b(v.m_b), m_u(v.m_u), m_v(v.m_v), m_nx(v.m_nx), m_ny(v.m_ny), m_nz(v.m_nz)
+Vertex::Vertex(const Vertex& v) : m_x(v.m_x), m_y(v.m_y), m_z(v.m_z), m_r(v.m_r), m_g(v.m_g), m_b(v.m_b), m_u(v.m_u), m_v(v.m_v), m_nx(v.m_nx), m_ny(v.m_ny), m_nz(v.m_nz)
 {
 }
 
 Vertex::~Vertex()
 {
-}
-
-bool Vertex::IsSet(Vertex::Flags f) const
-{
-  if(f == Flags::Position)
-    return true;
-
-  return (m_setAttrib & f) == f;
-}
-
-void Vertex::GetSetAttribArray(bool* resArray) const
-{
-  resArray[0] = IsSet(Flags::Position);
-  resArray[1] = IsSet(Flags::Color);
-  resArray[2] = IsSet(Flags::UV);
-  resArray[3] = IsSet(Flags::Normal);
-}
-
-const void* GetPointerTo(Vertex::Flags f)
-{
-  switch(f)
-    {
-    case Vertex::Flags::Position:
-      return (void*)sizeof(Vertex::Flags);
-    case Vertex::Flags::Color:
-      return (void*)(sizeof(Vertex::Flags)+3*sizeof(float));
-    case Vertex::Flags::UV:
-      return (void*)(sizeof(Vertex::Flags)+6*sizeof(float));
-    case Vertex::Flags::Normal:
-      return (void*)(sizeof(Vertex::Flags)+8*sizeof(float));
-    default:
-      return nullptr;
-    }
 }
 
 float Vertex::operator[](int index) const
@@ -110,7 +76,7 @@ float Vertex::operator[](int index) const
   }
 }
 	
-std::ostream& operator <<(std::ostream& lhs, const Vertex& rhs)
+/*std::ostream& operator <<(std::ostream& lhs, const Vertex& rhs)
 {
   lhs << "Position (" << rhs[0] << ", " << rhs[1] << ", " << rhs[2] << ")";
   if(rhs.IsSet(Vertex::Flags::Color))
@@ -126,4 +92,4 @@ std::ostream& operator <<(std::ostream& lhs, const Vertex& rhs)
       lhs << ";  Normal (" << rhs[8] << ", " << rhs[9] << ", " << rhs[10] << ")";
     }
   return lhs << "\n";
-}
+  }*/

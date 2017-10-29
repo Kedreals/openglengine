@@ -36,7 +36,7 @@ void BaseGame::Start()
 void BaseGame::Update()
 {
   CountFPS();
-  m_Camera->RotateAroundLookAt(vec3(), vec3(0, 1.0f, 0));
+  m_Camera->RotateAroundLookAt(vec3(), 1.0f/(float)lastFrames * vec3(0, 360.0f, 0));
 
   //m_Renderer->Update(lastFrames);
 }

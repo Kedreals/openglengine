@@ -21,9 +21,9 @@ namespace Loading
       LoadOff(model, fileName);
   }
 
-  void LogModelBuffer(const std::vector<Vertex>& vertexValues, const std::vector<unsigned int>& indexValues)
+  void LogModelBuffer(const std::vector<Vertex>& /*vertexValues*/, const std::vector<unsigned int>& /*indexValues*/)
   {
-    for(size_t i = 0; i < vertexValues.size(); ++i)
+    /*for(size_t i = 0; i < vertexValues.size(); ++i)
       std::clog << "Vertex" << i << ":  " << vertexValues[i];
 
     for(size_t i = 0; i < indexValues.size(); ++i){
@@ -32,7 +32,7 @@ namespace Loading
       std::clog << indexValues[i] << ", ";
       if(i%3 == 2)
 	std::clog << "\n";
-    }
+	}*/
   }
   
   void ModelLoader::LoadOff(Model*const model, const std::string& fileName) const
@@ -62,7 +62,7 @@ namespace Loading
 	col = col*2.0f;
 	
 	Vertex v(pos, col, Vertex::Flags::Color);
-	model->m_vertecies.push_back(v);
+	model->m_vertecies.push_back(v, VertexFormat::PositionColor);
       }
 
     for(int i = 0; i < faces; ++i)

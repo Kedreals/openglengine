@@ -83,16 +83,20 @@ float t = 0;
 
 void Renderer::Update(int fps)
 {
-  t += 0.1f;
+  t += 1.0f;
+  float time = 1.0f/fps;
   for(size_t i = 0; i < m_Content.size(); ++i)
     {
-      m_Content[i]->Scale(std::cos(t*(i+1+0.5f*i))*0.25f + 0.5f);
+      
+      vec3 euler(1,1,1);
+      m_Content[i]->Rotate(time*euler);
     }
   
   std::string title = m_baseTitle + " FPS: ";
   title += std::to_string(fps);
   
   SetTitle(title);
+  
 }
 
 void Renderer::Frame(const mat4& vp)
@@ -108,7 +112,8 @@ void Renderer::Frame(const mat4& vp)
  
 void Renderer::SetTitle(const std::string& title)
 {
-  glfwSetWindowTitle(m_window, title.c_str());
+  //glfwSetWindowTitle(m_window, title.c_str()); it is evil!!!
+  std::clog << title << std::endl;
 }
 
 void Renderer::AddContent(std::shared_ptr<Model> model)

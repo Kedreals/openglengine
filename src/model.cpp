@@ -93,6 +93,17 @@ void Model::Scale(float scaling)
   m_Scale = scaling;
 }
 
+void Model::Rotate(const glm::vec3& eulerAngles)
+{
+  glm::quat rot(eulerAngles);
+  Rotate(rot);
+}
+
+void Model::Rotate(const glm::quat& rotation)
+{
+  m_orientation=rotation*m_orientation;
+}
+
 void Model::Draw(const glm::mat4& vp, GLuint shader, GLuint mvp_handle)
 {
   if(!m_initialized)
@@ -110,22 +121,21 @@ void Model::Draw(const glm::mat4& vp, GLuint shader, GLuint mvp_handle)
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 
-  bool SetAttrib[4];
-  m_vertecies[0].GetSetAttribArray(SetAttrib);
-
+  AttribInfo info[4];
   for(size_t i = 0; i < 4; ++i)
     {
-      if(SetAttrib[i])
+      m_vertecies.GetInfoForAttrib(i,&info[i]);
+      if(info[i].IsSet)
 	{
 	  glEnableVertexAttribArray(i);
 	  glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 	  glVertexAttribPointer(
 				i,
-				(i!=2)?3:2,
+				info[i].size,
 				GL_FLOAT,
-				(i==1)?GL_TRUE:GL_FALSE,
+				info[i].Normalized,
 				sizeof(Vertex),
-				GetPointerTo(i==0?Vertex::Flags::Position:(Vertex::Flags)(Vertex::Flags::Color << (i-1))));
+				info[i].pointer);
 	}
     }
   
@@ -137,7 +147,7 @@ void Model::Draw(const glm::mat4& vp, GLuint shader, GLuint mvp_handle)
 
   for(size_t i = 0; i < 4; ++i)
     {
-      if(SetAttrib[i])
+      if(info[i].IsSet)
 	glDisableVertexAttribArray(i);
     }
 }
