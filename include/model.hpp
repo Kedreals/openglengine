@@ -86,7 +86,7 @@ private:
   GLuint m_vertexBuffer;
   GLuint m_colorBuffer;
   GLuint m_indexBuffer;
-  
+  GLuint m_texture;
 };
 
 #endif

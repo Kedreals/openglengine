@@ -37,7 +37,7 @@ Renderer::Renderer(unsigned int width, unsigned int height, const char* title)
   
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   
-  std::shared_ptr<Model> model1 = std::make_shared<Model>("../data/gargoyle500.off");
+  std::shared_ptr<Model> model1 = std::make_shared<Model>("");
   model1->Initialize();
 
   //  model1->Scale(0.5f);
@@ -55,7 +55,6 @@ Renderer::Renderer(unsigned int width, unsigned int height, const char* title)
   m_shader = LoadShaders("../shaders/SimpleVertexShader.vs", "../shaders/SimpleFragmentShader.fs");
   
   m_mvp_handle = glGetUniformLocation(m_shader, "MVP");
-  
   
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);

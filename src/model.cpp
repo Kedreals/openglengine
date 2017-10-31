@@ -11,15 +11,27 @@ Model::Model(const char* f):m_orientation(glm::vec3(0,0,0)), m_World(1.0f), m_in
 
   if(file == "")
     {
-  
+      unsigned char data[3];
+      data[0] = 128;
+      data[1] = 128;
+      data[2] = 128;
+      
+      glGenTextures(1, &m_texture);
+      glBindTexture(GL_TEXTURE_2D, m_texture);
+
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+      glGenerateMipmap(GL_TEXTURE_2D);
+
+      
       for(size_t i = 0; i < 8; ++i)
 	{
 	  bool x(i/4 < 1), y((i%4)/2 < 1), z(i%2 < 1);
 	  
 	  glm::vec3 pos((x)?(-1):(1), (y)?(-1):(1), (z)?(-1):(1));
 	  glm::vec3 col((x)?( 0):(1), (y)?( 0):(1), (z)?( 0):(1));
+	  glm::vec2 tex((x)?( 0):(1), (y)?( 0):(1));
 	  
-	  Vertex v(pos, col, Vertex::Flags::Color);
+	  Vertex v(pos, col, tex, Vertex::Flags::ColorUV);
       
 	  m_vertecies.push_back(v);
 	}
@@ -120,7 +132,7 @@ void Model::Draw(const glm::mat4& vp, GLuint shader, GLuint mvp_handle)
     glUniformMatrix4fv(mvp_handle, 1, GL_FALSE, &mvp[0][0]);
 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-
+  glBindTexture(GL_TEXTURE_2D, m_texture);
   AttribInfo info[4];
   for(size_t i = 0; i < 4; ++i)
     {

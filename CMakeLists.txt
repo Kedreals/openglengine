@@ -31,6 +31,7 @@ set(SRC
   ${SRC_DIR}/vertex.cpp
   ${SRC_DIR}/modelLoader.cpp
   ${SRC_DIR}/vertexBuffer.cpp
+  ${SRC_DIR}/texture.cpp
   )
 
 set(ALL_LIBS
