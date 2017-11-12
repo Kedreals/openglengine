@@ -1,6 +1,13 @@
 #ignore generated Documentation
 Doxygen/
 
+#ignore generated backupfiles
+*~
+
+#ignore sample data folder and build folder
+data/
+build/
+
 *.i
 *.ii
 *.gpu
