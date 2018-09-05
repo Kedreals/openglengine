@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 2.8)
 PROJECT(openglengine)
 
 find_package(OpenGL REQUIRED)
+IF (WIN32)
+  list(APPEND CMAKE_PREFIX_PATH "C:/Program Files (x86)/glew")
+ENDIF()
+
 find_package(GLEW REQUIRED)
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -38,9 +42,13 @@ set(ALL_LIBS
   ${OPENGL_LIBRARY}
   ${GLEW_LIBRARIES}
   glfw
- )
+  )
 
-set( CMAKE_CXX_FLAGS "-g -W -Wall -std=c++11 -lGL -lGLU -lGLEW")
+IF (WIN32)
+  set( CMAKE_CXX_FLAGS "-std=c++11")
+ELSE ()
+  set( CMAKE_CXX_FLAGS "-g -W -Wall -std=c++11 -lGL -lGLU -lGLEW")
+ENDIF()
 
 add_executable(openglengine ${SRC})
 target_link_libraries(openglengine ${ALL_LIBS})
